@@ -1,0 +1,39 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "onboarding": true,
+  "platform": "github",
+  "forkProcessing": "enabled",
+  "prConcurrentLimit": 20,
+  "prHourlyLimit": 20,
+  "dependencyDashboard": true,
+  "semanticCommits": "enabled",
+  "automerge": false,
+  "labels": [
+    "dependencies"
+  ],
+  "extends": [
+    "config:base",
+    "config:recommended"
+  ],
+  "separateMinorPatch": true,
+  "dockerfile": {
+    "enabled": false
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["Makefile.variables"],
+      "matchStrings": ["alpine_version\\s*=\\s*(?<currentValue>\\S+)"],
+      "depNameTemplate": "alpine",
+      "versioningTemplate": "semver-coerced",
+      "datasourceTemplate": "custom.alpine"
+    }
+  ],
+  "customDatasources": {
+    "alpine": {
+      "defaultRegistryUrlTemplate": "https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/latest-releases.yaml",
+      "format": "text",
+      "extractVersion": "version:\\s*(?<version>[\\d.]+)"
+    }
+  }
+}
