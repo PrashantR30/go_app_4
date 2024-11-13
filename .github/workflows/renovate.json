@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "onboarding": true,
+  "platform": "github",
+  "forkProcessing": "enabled",
+  "prConcurrentLimit": 20,
+  "prHourlyLimit": 20,
+  "dependencyDashboard": true,
+  "semanticCommits": "enabled",
+  "automerge": false,
+  "labels": ["dependencies"],
+  "extends": ["config:recommended"],
+  "separateMinorPatch": true,
+  "dockerfile": {
+    "enabled": false
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["Makefile.variables"],
+      "matchStrings": ["etcd_version\\s*=\\s*(?<currentValue>\\S+)"],
+      "depNameTemplate": "etcd",
+      "versioningTemplate": "semver",
+      "datasourceTemplate": "github-releases",
+      "packageNameTemplate": "etcd-io/etcd"
+    }
+  ]
+}
